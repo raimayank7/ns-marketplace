@@ -2,7 +2,7 @@
    The file (CSV or Excel) is read in this browser only (NSMarket in mpcore.js). The layout of each marketplace's file is not known to this tool:
    it finds the columns by their headings and every column can be changed by hand. Each order is matched with your saved invoices by order id,
    then by amount and date; returns, fees, TCS and TDS are totalled; what the file paid is compared with what its own parts add up to, and
-   with what reached your bank. The payout can be added to the books of the free Nivesh Sahayak App (record type 'mpay', books side in d.books). */
+   with what reached your bank. The payout can be added to the books of the free NSBiz (record type 'mpay', books side in d.books). */
 (function () {
   'use strict';
   var $ = NS.$, $$ = NS.$$, esc = NS.esc, num = NS.num, r2 = NS.r2, money = NS.money, M = NSMarket, t = NSB.t;
