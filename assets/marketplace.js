@@ -140,7 +140,7 @@
       var P = String(OPT.party || OPT.name || '').trim();
       if (!P) { NS.toast(t('mk.v.party'), 'bad'); return; }
       if (OPT.received === '' || !(num(OPT.received) > 0)) { NS.toast(t('mk.v.recv'), 'bad'); return; }
-      if (!confirm(t('mk.c.books'))) return;
+      if (!NS.okSync(t('mk.c.books'))) return;
     }
     var rec = record(!!withBooks);
     NSStore.put('doc', rec).then(function (x) { saveId = x && x.id || rec.id; NS.toast(t(withBooks ? 'mk.booked' : 'sb.saved')); show(); });
@@ -169,7 +169,7 @@
   function wire(pane) {
     NSB.wireBiz(pane, show);
     var fi = $('#mk-file', pane); if (fi) fi.addEventListener('change', function () { if (fi.files[0]) readFile(fi.files[0]); fi.value = ''; });
-    var sm = $('[data-sample]', pane); if (sm) sm.addEventListener('click', function () { sampleFile(confirm(t('mk.samplec')) ? 'wide' : 'long'); });
+    var sm = $('[data-sample]', pane); if (sm) sm.addEventListener('click', function () { (NS.ask ? NS.ask(t('mk.samplec')) : Promise.resolve(confirm(t('mk.samplec')))).then(function (y) { sampleFile(y ? 'wide' : 'long'); }); });
     $$('[data-opt]', pane).forEach(function (e) { e.addEventListener('change', function () { OPT[e.getAttribute('data-opt')] = e.value; keep(); if (ST && ST.rows) work(); show(); }); });
     $$('[data-col]', pane).forEach(function (sel) { sel.addEventListener('change', function () { var m = Object.assign({}, ST.map), k = sel.getAttribute('data-col'); if (sel.value === '') delete m[k]; else m[k] = +sel.value; ST.map = m; work(); show(); }); });
     var sh = $('#mk-sheet', pane); if (sh) sh.addEventListener('change', function () { setSheet(+sh.value); show(); });
@@ -182,7 +182,7 @@
     var pr = $('[data-print]', pane), pdf = $('[data-pdf]', pane);
     if (pr) pr.addEventListener('click', NSB.printSheet);
     if (pdf) pdf.addEventListener('click', function () { NSB.shareSheet($('[data-sheet]', pane), NSB.bizName() + ' marketplace payout ' + (ST.ag.to || '')); });
-    $$('[data-del]', pane).forEach(function (b) { b.addEventListener('click', function () { var d = D().filter(function (x) { return x.id === b.getAttribute('data-del'); })[0]; if (d && confirm(t('sb.cdel', { x: d.no }))) NSStore.del('doc', d.id).then(function () { NS.toast(t('sb.deleted')); show(); }); }); });
+    $$('[data-del]', pane).forEach(function (b) { b.addEventListener('click', function () { var d = D().filter(function (x) { return x.id === b.getAttribute('data-del'); })[0]; if (d && NS.okSync(t('sb.cdel', { x: d.no }))) NSStore.del('doc', d.id).then(function () { NS.toast(t('sb.deleted')); show(); }); }); });
   }
 
   function init() {
