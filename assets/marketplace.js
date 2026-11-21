@@ -6,7 +6,7 @@
 (function () {
   'use strict';
   var $ = NS.$, $$ = NS.$$, esc = NS.esc, num = NS.num, r2 = NS.r2, money = NS.money, M = NSMarket, t = NSB.t;
-  var LIB = { xl: ['https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', 'sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw'] };
+  var LIB = { xl: ['/assets/vendor/xlsx-0.20.3.full.min.js', ''] };
   var cur = 'home', ST = null, OPT = load(), filter = 'all', limit = 200, saveId = '';
   /* ST = { name, sheets: [[name, rows]], sheet, rows, header, map, parse, ag, mt } */
   function load() { var o = {}; try { o = JSON.parse(localStorage.getItem('ns-marketplace-opts') || '{}'); } catch (e) {} return Object.assign({ name: '', tcsRate: '', tdsRate: '', gst: '', days: 10, party: '', received: '', mode: 'bank', payDate: '' }, o); }
